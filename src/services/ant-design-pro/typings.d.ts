@@ -2,6 +2,16 @@
 /* eslint-disable */
 
 declare namespace API {
+  /**
+   *  用于对接后端的通用返回类
+   */
+  type BaseResponse<T> = {
+    code: number,
+    data: T,
+    message: string,
+    description: string
+  }
+
   type CurrentUser = {
     id: number;
     username: string;
@@ -13,8 +23,9 @@ declare namespace API {
     userStatus: number;
     userRole: number;
     createTime: Date;
-
   };
+
+  type CreatePostResult = number;
 
   type LoginResult = {
     status?: string;
@@ -69,6 +80,16 @@ declare namespace API {
     checkPassword?: string;
     type?: string;
   };
+
+  type CreatePostParams = {
+    userAccount?: string;
+    username?: string;
+    avatarUrl?: string;
+    title?: string;
+    postContext?: string;
+    postImage?: string;
+    postType?: string;
+  }
 
   type ErrorResponse = {
     /** 业务约定的错误码 */

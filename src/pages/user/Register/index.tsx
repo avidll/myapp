@@ -40,7 +40,7 @@ const Register: React.FC = () => {
     try {
       // 注册
       const id = await register(values);
-      if (id > 0) {
+      if (id) {
         const defaultLoginSuccessMessage = '注册成功！';
         message.success(defaultLoginSuccessMessage);
         // await fetchUserInfo();
@@ -53,7 +53,7 @@ const Register: React.FC = () => {
         });
         return;
       } else {
-        throw new Error(`register error id = ${id}`);
+        // throw new Error(`register error id = ${id}`);
       }
     } catch (error) {
       const defaultLoginFailureMessage = '注册失败，请重试！';
@@ -72,7 +72,7 @@ const Register: React.FC = () => {
           }}
           logo={<img alt="logo" src={SYSTEM_LOGO}/>}
           title="jxnu"
-          subTitle={'jnnu'}
+          subTitle={'jxnu'}
           initialValues={{
             autoLogin: true,
           }}

@@ -1,4 +1,3 @@
-import Footer from '@/components/Footer';
 import RightContent from '@/components/RightContent';
 import {BookOutlined, LinkOutlined} from '@ant-design/icons';
 import type {Settings as LayoutSettings} from '@ant-design/pro-components';
@@ -22,7 +21,7 @@ export const initialStateConfig = {
 
 export const request: RequestConfig = {
   // prefix: '/api',
-  timeout: 1000000,
+  timeout: 10000000,
 };
 
 /**
@@ -30,9 +29,9 @@ export const request: RequestConfig = {
  * */
 export async function getInitialState(): Promise<{
   settings?: Partial<LayoutSettings>;
-  currentUser?: API.CurrentUser;
+  currentUser?: API.CurrentUser | API.BaseResponse<API.CurrentUser>;
   loading?: boolean;
-  fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
+  fetchUserInfo?: () => Promise<API.CurrentUser | API.BaseResponse<API.CurrentUser> | undefined>;
 }> {
   const fetchUserInfo = async () => {
     try {
@@ -59,13 +58,13 @@ export async function getInitialState(): Promise<{
 
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({initialState, setInitialState}) => {
-   return {
+  return {
     rightContentRender: () => <RightContent/>,
     disableContentMargin: false,
-    waterMarkProps: {
-      content: initialState?.currentUser?.username,
-    },
-    footerRender: () => <Footer/>,
+    // waterMarkProps: {
+    //   content: initialState?.currentUser?.username,
+    // },
+    // footerRender: () => <Footer/>,
     onPageChange: () => {
       const {location} = history;
       if (NO_NEED_LOGIN_WHITE_LIST.includes(location.pathname)) {

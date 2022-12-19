@@ -28,7 +28,7 @@ const LoginMessage: React.FC<{
   />
 );
 const Login: React.FC = () => {
-  const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
+  const [setUserLoginState] = useState<API.LoginResult>({});
   const [type, setType] = useState<string>('account');
   const {initialState, setInitialState} = useModel('@@initialState');
   const fetchUserInfo = async () => {
@@ -41,6 +41,7 @@ const Login: React.FC = () => {
     }
   };
   const handleSubmit = async (values: API.LoginParams) => {
+    console.log(values)
     try {
       // 登录
       const user = await login({
@@ -62,13 +63,14 @@ const Login: React.FC = () => {
       }
       console.log(user);
       // 如果失败去设置用户错误信息
+      // @ts-ignore
       setUserLoginState(user);
     } catch (error) {
-      const defaultLoginFailureMessage = '登录失败，请重试！';
-      message.error(defaultLoginFailureMessage);
+      // const defaultLoginFailureMessage = '登录失败，请重试！';
+      // message.error(defaultLoginFailureMessage);
     }
   };
-  const {status, type: loginType} = userLoginState;
+  // const {status, type: loginType} = userLoginState;
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -87,7 +89,7 @@ const Login: React.FC = () => {
             <Tabs.TabPane key="account" tab={'账号密码登录'}/>
           </Tabs>
 
-          {status === 'error' && loginType === 'account' && (
+          {status === 'error' && (
             <LoginMessage content={'错误的账号和密码'}/>
           )}
           {type === 'account' && (
@@ -128,24 +130,24 @@ const Login: React.FC = () => {
             </>
           )}
 
-          {status === 'error' && loginType === 'mobile' && <LoginMessage content="验证码错误"/>}
+
           <div
             style={{
               marginBottom: 24,
             }}
           >
-            <Space split={<Divider type={"vertical"} />}>
-            <ProFormCheckbox noStyle name="autoLogin">
-              自动登录
-            </ProFormCheckbox>
-            <Link to="/user/register">新用户注册</Link>
-            <a
-              style={{
-                float: 'right',
-              }}
-            >
-              忘记密码 ?
-            </a>
+            <Space split={<Divider type={"vertical"}/>}>
+              <ProFormCheckbox noStyle name="autoLogin">
+                自动登录
+              </ProFormCheckbox>
+              <Link to="/user/register">新用户注册</Link>
+              <a
+                style={{
+                  float: 'right',
+                }}
+              >
+                忘记密码 ?
+              </a>
             </Space>
           </div>
         </LoginForm>
